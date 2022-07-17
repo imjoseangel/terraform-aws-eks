@@ -36,8 +36,18 @@ resource "aws_iam_role" "this" {
   description = var.iam_role_description
 
   assume_role_policy    = data.aws_iam_policy_document.assume_role_policy[0].json
-  permissions_boundary  = var.iam_role_permissions_boundary
+  permissions_boundary  = format("arn:aws:iam::%s:policy/%s", local.account_id, var.iam_role_permissions_boundary)
   force_detach_policies = true
 
   tags = merge(var.tags, var.iam_role_tags)
+}
+
+resource "aws_iam_role_policy_attachment" "this" {
+  for_each = local.create_iam_role ? toset(compact(distinct(concat([
+    "${local.policy_arn_prefix}/AmazonEKSClusterPolicy",
+    "${local.policy_arn_prefix}/AmazonEKSVPCResourceController",
+  ], var.iam_role_additional_policies)))) : toset([])
+
+  policy_arn = each.value
+  role       = aws_iam_role.this[0].name
 }
