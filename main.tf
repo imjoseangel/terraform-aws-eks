@@ -1,4 +1,5 @@
-data "aws_partition" "current" {}
+data "aws_partition" "main" {}
+data "aws_caller_identity" "main" {}
 
 ################################################################################
 # IAM Role
@@ -7,9 +8,9 @@ data "aws_partition" "current" {}
 locals {
   create_iam_role   = var.create && var.create_iam_role
   iam_role_name     = coalesce(var.iam_role_name, "${var.cluster_name}-cluster")
-  policy_arn_prefix = "arn:${data.aws_partition.current.partition}:iam::aws:policy"
-
-  dns_suffix = data.aws_partition.current.dns_suffix
+  policy_arn_prefix = "arn:${data.aws_partition.main.partition}:iam::aws:policy"
+  account_id        = data.aws_caller_identity.main.account_id
+  dns_suffix        = data.aws_partition.main.dns_suffix
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
