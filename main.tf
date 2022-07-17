@@ -12,6 +12,16 @@ locals {
   dns_suffix = data.aws_partition.current.dns_suffix
 }
 
-output "dns_suffix" {
-  value = local.dns_suffix
+data "aws_iam_policy_document" "assume_role_policy" {
+  count = local.create && var.create_iam_role ? 1 : 0
+
+  statement {
+    sid     = "EKSClusterAssumeRole"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["eks.${local.dns_suffix}"]
+    }
+  }
 }
