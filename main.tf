@@ -53,5 +53,7 @@ resource "aws_iam_role_policy_attachment" "this" {
 }
 
 module "node-group" {
-  source = "modules/node-group"
+  source                        = "./modules/node-group"
+  iam_role_permissions_boundary = format("arn:aws:iam::%s:policy/%s", local.account_id, var.iam_role_permissions_boundary)
+  iam_role_tags                 = var.iam_role_tags
 }
