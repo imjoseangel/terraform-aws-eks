@@ -14,7 +14,7 @@ Terraform module to create an Elastic Kubernetes (EKS) cluster and associated re
 
 ```terraform
 module "eks" {
-  source               = "github.com/imjoseangel/terraform-aws-kubernetes"
+  source = "github.com/imjoseangel/terraform-aws-kubernetes"
 }
 ```
 
