@@ -29,7 +29,7 @@ variable "create_iam_role" {
 variable "iam_role_name" {
   description = "Name to use on IAM role created"
   type        = string
-  default     = null
+  default     = "AmazonEKSNodeRole"
 }
 
 variable "cluster_ip_family" {
@@ -38,22 +38,10 @@ variable "cluster_ip_family" {
   default     = null
 }
 
-variable "iam_role_use_name_prefix" {
-  description = "Determines whether the IAM role name (`iam_role_name`) is used as a prefix"
-  type        = bool
-  default     = true
-}
-
-variable "iam_role_path" {
-  description = "IAM role path"
-  type        = string
-  default     = null
-}
-
 variable "iam_role_description" {
   description = "Description of the role"
   type        = string
-  default     = null
+  default     = "Amazon EKS - Node role"
 }
 
 variable "iam_role_permissions_boundary" {

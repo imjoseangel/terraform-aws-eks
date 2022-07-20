@@ -45,25 +45,13 @@ variable "iam_role_arn" {
 variable "iam_role_name" {
   description = "Name to use on IAM role created"
   type        = string
-  default     = null
-}
-
-variable "iam_role_use_name_prefix" {
-  description = "Determines whether the IAM role name (`iam_role_name`) is used as a prefix"
-  type        = bool
-  default     = true
-}
-
-variable "iam_role_path" {
-  description = "Cluster IAM role path"
-  type        = string
-  default     = null
+  default     = "eksClusterRole"
 }
 
 variable "iam_role_description" {
   description = "Description of the role"
   type        = string
-  default     = null
+  default     = "Amazon EKS - Cluster role"
 }
 
 variable "iam_role_permissions_boundary" {
